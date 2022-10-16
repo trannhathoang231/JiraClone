@@ -28,6 +28,15 @@ export const DrawerReducer = (state = initialState, action) => {
         state.callBackSubmit = action.submitFunction;
         return {...state}
     }
+
+    case 'OPEN_FORM_CREATE_TASK': {
+      state.visible = true;
+      state.title = action.title;
+      state.ComponentContentDrawer = action.Component;
+
+      return {...state};
+    }
+
     default:
       return state;
   }

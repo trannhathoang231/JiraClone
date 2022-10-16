@@ -469,7 +469,8 @@ const stateDefault = {
           "alias": "project-1",
           "deleted": false
         }
-      ]
+      ],
+      arrProject: []
 }
 
 
@@ -484,6 +485,12 @@ export const ProjectCyberBugsReducer= (state = stateDefault, action) => {
             console.log(action.projectList);
             return {...state}
         }
+
+        case 'GET_ALL_PROJECT': {
+          state.arrProject = action.arrProject;
+
+          return {...state}
+      }
 
         default : return {...state}
     }

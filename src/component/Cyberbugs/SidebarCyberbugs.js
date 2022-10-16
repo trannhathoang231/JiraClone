@@ -1,27 +1,47 @@
-import React from 'react'
+import React, { useState } from 'react';
+import {
+    BarsOutlined,
+    SearchOutlined,
+    PlusCircleOutlined,
+} from '@ant-design/icons';
+import { Layout, Menu } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import FormCreateTask from '../Forms/FormCreateTask/FormCreateTask';
+
+const { Sider } = Layout;
 
 export default function SidebarCyberbugs() {
-  return (
-    <div className="sideBar">
-    <div className="sideBar-top">
-        <div className="sideBar-icon">
-            <i className="fab fa-jira" />
+    const dispatch = useDispatch();
+
+    const [collapsed, setCollapsed] = useState(false);
+
+    return (
+        <div>
+            <Sider trigger={null} collapsible collapsed={collapsed} style={{ height: '100%' }}>
+                <div className='text-right' onClick={() => { setCollapsed(!collapsed) }}><BarsOutlined style={{ cursor: 'pointer', color: '#fff', fontSize: '20px' }} /></div>
+                <Menu
+                    theme="dark"
+                    mode="inline"
+                    defaultSelectedKeys={['1']}
+                    items={[
+                        {
+                            key: '1',
+                            icon: <PlusCircleOutlined />,
+                            label: 'Create Task',
+                            onClick: () => {dispatch({
+                                type: 'OPEN_FORM_CREATE_TASK',
+                                Component: <FormCreateTask />,
+                                title: 'Create Task'
+                            })}
+                        },
+                        {
+                            key: '2',
+                            icon: <SearchOutlined />,
+                            label: 'Search',
+                        },
+                    ]}
+                />
+            </Sider>
         </div>
-        <div className="sideBar-icon" data-toggle="modal" data-target="#searchModal" style={{ cursor: 'pointer' }}>
-            <i className="fa fa-search" />
-            <span className="title">SEARCH ISSUES</span>
-        </div>
-        <div className="sideBar-icon">
-            <i className="fa fa-plus" />
-            <span className="title">CREATE ISSUES</span>
-        </div>
-    </div>
-    <div className="sideBar-bottom">
-        <div className="sideBar-icon">
-            <i className="fa fa-question-circle" />
-            <span className="title">ABOUT</span>
-        </div>
-    </div>
-</div>
-  )
+    )
 }
