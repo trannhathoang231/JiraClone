@@ -1,20 +1,18 @@
-import { combineReducers, createStore, applyMiddleware } from "redux";
+import {applyMiddleware, combineReducers, createStore } from "redux";
 import thunk from 'redux-thunk';
-
+import { UserLoginCyberBugsReducer } from "./reducers/UserCyberBugsReducer";
 import { DrawerReducer } from "./reducers/DrawerReducer";
 import { ProjectReducer } from "./reducers/ProjectReducer";
-import { ProjectCategoryReducer } from "./reducers/ProjectCategoryReducer";
 import { ProjectCyberBugsReducer } from "./reducers/ProjectCyberBugsReducer";
-import { QLNDReducer } from './reducers/QLNDReducer';
+import { ProjectCategoryReducer } from "./reducers/ProjectCategoryReducer";
 
 const rootReducer = combineReducers({
-    QLNDReducer,
-    ProjectCategoryReducer,
-    ProjectCyberBugsReducer,
+    UserLoginCyberBugsReducer,
     DrawerReducer,
     ProjectReducer,
+    ProjectCyberBugsReducer,
+    ProjectCategoryReducer
 })
-
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default store;

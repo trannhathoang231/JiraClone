@@ -1,14 +1,14 @@
-import axios from "axios";
-import { DOMAIN, TOKEN } from "../ulti/setting";
+import axios from 'axios'
+import { TOKEN , DOMAIN_CYBERBUG } from "../ulti/constants/settingSystem.js"
 export const http = axios.create();
-// Add a request interceptor
 
 http.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    config.baseURL = DOMAIN;
+    config.baseURL = DOMAIN_CYBERBUG;
     config.headers = {
       TokenCybersoft: TOKEN,
+    //   Authorization: `Bearer ` + localStorage.getItem("accessToken"),
       Authorization: `Bearer ` + localStorage.getItem("accessToken")
     };
     return { ...config };
@@ -22,12 +22,16 @@ http.interceptors.request.use(
 // Add a response interceptor
 http.interceptors.response.use(
   function (response) {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
     if (response.data.content) {
       return response.data.content;
     }
     return response;
   },
   function (error) {
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // Do something with response error
     if (error.response.data) {
       return Promise.reject(error.response.data);
     }

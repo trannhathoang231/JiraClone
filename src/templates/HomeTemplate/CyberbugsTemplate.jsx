@@ -17,11 +17,15 @@ export const CyberbugsTemplate = (props) => {
     return <Route {...restParam} render={(propsRoute) => {
         return <>
             <div className="jira">
+                
+                    <div style={{width:"25%",position:'relative',zIndex:'2'}}> 
                     <SidebarCyberbugs /> 
+                    <MenuCyberbugs  /> 
+                    </div>
+                    <div style={{width:'80%'}}>
+                     <Component {...propsRoute}  />
 
-                    <MenuCyberbugs /> 
-
-                     <Component {...propsRoute} />
+                    </div>
 
                     <ModalCyberBugs />
                 </div>
