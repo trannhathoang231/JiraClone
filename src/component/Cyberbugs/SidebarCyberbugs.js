@@ -37,7 +37,8 @@ export default function SidebarCyberbugs() {
                 </Sider>
             </Layout>
         </div >
-
+    )
+}
 
 // import React, { useState } from 'react';
 // import {

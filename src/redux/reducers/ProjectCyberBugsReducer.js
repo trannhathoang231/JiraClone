@@ -1,7 +1,7 @@
 
 const stateDefault = {
     projectList: [ 
-      ]
+
 
         {
           "members": [
