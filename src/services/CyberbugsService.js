@@ -2,7 +2,6 @@ import BaseServices from "./baseServices";
 
 
 class CyberbugsService extends BaseServices {
-
     constructor() {
         super();
     }
@@ -13,7 +12,7 @@ class CyberbugsService extends BaseServices {
 
     getListProject = () => {
         return this.get("/api/Project/getAllProject");
-      }
+    }
 
 }
 
