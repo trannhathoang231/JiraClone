@@ -1,11 +1,8 @@
 
 
 const stateDefault = {
-    arrProjectCategory : []
+    arrProjectCategory : [],
 }
-
-
-
 
 export const ProjectCategoryReducer = (state = stateDefault,action) => {
     switch(action.type) {
