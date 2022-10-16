@@ -2,9 +2,10 @@ import React from 'react'
 
 export default function ContentMain() {
     return (
-        <div className="content" style={{ display: 'flex' }}>
+        
+        <div className="content" style={{ display: 'flex',width:'fit-content',width:'100%',margin:'0'}}>
 
-            <div className="card" style={{ width: '17rem', height: '25rem' }}>
+            <div className="card" style={{ width: '25%', height: '25rem' }}>
                 <div className="card-header">
                     BACKLOG 3
                 </div>
@@ -73,7 +74,7 @@ export default function ContentMain() {
                 </ul>
             </div>
 
-            <div className="card" style={{ width: '17rem', height: '25rem' }}>
+            <div className="card" style={{ width: '25%', height: '25rem' }}>
                 <div className="card-header">
                     SELECTED FOR DEVELOPMENT 2
                 </div>
@@ -83,7 +84,7 @@ export default function ContentMain() {
                 </ul>
             </div>
 
-            <div className="card" style={{ width: '17rem', height: '25rem' }}>
+            <div className="card" style={{ width: '25%', height: '25rem' }}>
                 <div className="card-header">
                     IN PROGRESS 2
                 </div>
@@ -93,7 +94,7 @@ export default function ContentMain() {
                 </ul>
             </div>
 
-            <div className="card" style={{ width: '17rem', height: '25rem' }}>
+            <div className="card" style={{width: '25%', height: '25rem' }}>
                 <div className="card-header">
                     DONE 3
                 </div>

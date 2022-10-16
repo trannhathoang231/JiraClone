@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 export default function MenuCyberbugs() {
   return (
-    <div className="menu">
+    <div className="menu" style={{position:'fixed',marginLeft:'5%',zIndex:'1'}}>
       <div className="account">
         <div className="avatar">
           <img src={require("../../assets/img/download.jpeg")} alt="123" />
@@ -13,7 +13,7 @@ export default function MenuCyberbugs() {
           <p>Report bugs</p>
         </div>
       </div>
-      <div className="control">
+      <div className="control p-0">
         <div>
           <i className="fa fa-credit-card mr-1" />
           <NavLink className="text-dark" activeStyle={{color:'blue'}} to="/cyberbugs" activeClassName="active font-weight-bold text-primary">Cyber Board</NavLink>
@@ -30,7 +30,7 @@ export default function MenuCyberbugs() {
         </div>
       </div>
 
-      <div className="feature">
+      <div className="feature p-0">
         <div>
           <i className="fa fa-equals mr-1" />
           <span>Issues and filters</span>

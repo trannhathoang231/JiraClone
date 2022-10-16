@@ -1,7 +1,8 @@
 
-
 const stateDefault = {
-    projectList: [
+    projectList: [ 
+      ]
+
         {
           "members": [
             {
@@ -482,7 +483,7 @@ export const ProjectCyberBugsReducer= (state = stateDefault, action) => {
         
         case 'GET_LIST_PROJECT': {
             state.projectList = action.projectList;
-            console.log(action.projectList);
+            // console.log(action.projectList);
             return {...state}
         }
 

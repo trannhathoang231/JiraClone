@@ -22,7 +22,7 @@ export default function IndexCyberBugs(props) {
     },[])
 
   return (
-    <div className='main'>
+    <div className='main container mt-5'>
    
                         <h3>Cyber Board</h3>
                         <HeaderMain />

@@ -12,12 +12,8 @@ function FormEditProject(props) {
 
     const {
         values,
-        touched,
-        errors,
         handleChange,
-        handleBlur,
         handleSubmit,
-        setValues,
         setFieldValue
     } = props;
 
@@ -63,8 +59,9 @@ function FormEditProject(props) {
         <div className="col-4">
           <div className="form-group">
             <p className="font-weight-bold">Project Category</p>
-            <select className="form-control" name="categoryId" value={values.categoryId}>
+            <select className="form-control" name="" valuedefault={values.categoryId}>
                 {arrProjectCategory?.map((item,index)=>{
+                  console.log(arrProjectCategory,'arrPro')
                    return <option key={index} value={item.id}>{item.projectCategoryName}</option>
                 })}
             </select>
@@ -82,7 +79,6 @@ function FormEditProject(props) {
             //   value={values.description}
               init={{
                 selector: "textarea#myTextArea",
-
                 height: 500,
                 menubar: false,
                 plugins: [

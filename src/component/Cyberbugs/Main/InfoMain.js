@@ -10,7 +10,7 @@ export default function InfoMain(props) {
         <section>
              {/* {ReactHtmlParser(projectDetail.description)} */}
         </section>
-        <div className='info' style={{display: 'flex'}}>
+        <div className='info py-3' style={{display: 'flex'}}>
             <div className="search-block">
                 <input className="search" />
                 <i className="fa fa-search"></i>

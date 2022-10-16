@@ -3,16 +3,13 @@ import { Editor } from "@tinymce/tinymce-react";
 import { withFormik } from "formik";
 import * as Yup from 'yup'
 import {connect, useSelector, useDispatch} from 'react-redux' //co the dung connect hoac useSelector de lay du lieu ve
-import { projectCategoryAction } from "../../../redux/actions/ProjectCategoryAction";
 
 function CreateProject(props) {
 
-    const {arrProjectCategory} = useSelector((state) => state.ProjectCategoryReducer)
-
+    const arrProjectCategory = useSelector(state => state.ProjectCategoryReducer.arrProjectCategory)
     const dispatch = useDispatch();
 
     console.log('arrProjectCategory',arrProjectCategory);
-
     const {
         values,
         touched,
@@ -25,7 +22,7 @@ function CreateProject(props) {
 
     useEffect(()=> {
         //Goi api de lay du lieu the select
-        dispatch(projectCategoryAction())
+        dispatch({type:'GET_ALL_PROJECT_CATEGORY_SAGA'})
     },[])
 
     const handleEditorChange = (content, editor) => {
@@ -33,7 +30,7 @@ function CreateProject(props) {
     }
 
   return (
-    <div className="container">
+    <div className="container mt-5">
       <h3>Create Project</h3>
       <form className="container" onSubmit={handleSubmit}>
         <div className="form-group">
@@ -48,7 +45,7 @@ function CreateProject(props) {
             name ='description'
             initialValue=""
             init={{
-              height: 500,
+              height: 300,
               menubar: false,
               plugins: [
                 "advlist autolink lists link image charmap print preview anchor",
@@ -68,7 +65,7 @@ function CreateProject(props) {
          
         </div>
         <div className="form-group">
-          <select name="categoryId" className="form-control">
+          <select name="categoryId" valueDefault={1} className="form-control">
             {arrProjectCategory.map((item,index)=> {
                 return <option value={item.id} key={index}>{item.projectCategoryName}</option>
             })}
