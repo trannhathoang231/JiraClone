@@ -7,10 +7,14 @@ import FormEditProject from "../../../component/Forms/FormEditProject/FormEditPr
 import axios from 'axios'
 import { DOMAIN_CYBERBUG } from "../../../ulti/constants/settingSystem";
 import { getAllProjectAction } from "../../../redux/action/ProjectCyberBugsAction";
+import { DeleteProjectAction } from "../../../redux/action/DeleteProjectAction";
+import { message, Popconfirm } from 'antd';
+
+
+
 export default function ProjectManagement(props) {
   //lấy dữ liệu từ reducer
-  const {projectList} = useSelector(state => state.ProjectCyberBugsReducer);
-
+  const { projectList } = useSelector(state => state.ProjectCyberBugsReducer);
   // sử dụng useDispatch để gọi action
   const dispatch = useDispatch();
 
@@ -20,9 +24,9 @@ export default function ProjectManagement(props) {
     sortedInfo: null,
   });
 
-  useEffect(() => { 
-      dispatch(getAllProjectAction())
-   },[])
+  useEffect(() => {
+    dispatch(getAllProjectAction())
+  }, [])
 
 
   const handleChange = (pagination, filters, sorter) => {
@@ -84,9 +88,9 @@ export default function ProjectManagement(props) {
 
     },
     {
-      title:'category',
-      dataIndex:'categoryName',
-      key:'categoryId',
+      title: 'category',
+      dataIndex: 'categoryName',
+      key: 'categoryId',
       //!sorter
       // sorter: (item2,item1) =>{
       //   let categoryName1 = item1.categoryName?.trim().toLowerCase();
@@ -98,15 +102,15 @@ export default function ProjectManagement(props) {
       // },
     },
     {
-      title:'members',
+      title: 'members',
       // dataIndex:'name',
-      key:'userId',
-      render(text,record,index){
-         return record.members.map((item,i) => {
-           return <Tag key={i} color='green' style={{display:'inline-block'}}>{item.name}</Tag>
-           })
-        }
-       //!sorter
+      key: 'userId',
+      render(text, record, index) {
+        return record.members.map((item, i) => {
+          return <Tag key={i} color='green' style={{ display: 'inline-block' }}>{item.name}</Tag>
+        })
+      }
+      //!sorter
       // sorter: (item2,item1) =>{
       //   let creator1 = item1.creator.name?.trim().toLowerCase();
       //   let creator2 = item2.creator.name?.trim().toLowerCase();
@@ -130,18 +134,35 @@ export default function ProjectManagement(props) {
 
               //dispatch len reducer noi dung drawer
               dispatch(action)
+
               //dispatch du lieu dong hien tai len reducer
               const actionEditProject = {
                 type:'EDIT_PROJECT',
                 projectEditModel:record
               }
+
               dispatch(actionEditProject)
             }}>
               <EditOutlined style={{ fontSize: 17 }} />
             </button>
-            <button className="btn btn-danger">
-              <DeleteOutlined style={{ fontSize: 17 }} />
-            </button>
+            <Popconfirm
+              title="Are you sure to delete this project?"
+              onConfirm={() => { 
+                const action = {
+                  type: 'DELETE_PROJECT',
+                  projectId: record.id
+                }
+                dispatch(DeleteProjectAction(action))
+               }}
+              onCancel={() => {  }}
+              okText="Yes"
+              cancelText="No"
+            >
+              <button className="btn btn-danger">
+                <DeleteOutlined style={{ fontSize: 17 }} />
+              </button>
+            </Popconfirm>
+
           </div>
         );
       },

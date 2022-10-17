@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
     DrawerReducer,
     ProjectReducer,
     ProjectCyberBugsReducer,
-    ProjectCategoryReducer
+    ProjectCategoryReducer,
 })
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
