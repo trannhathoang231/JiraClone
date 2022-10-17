@@ -19,6 +19,7 @@ export const dangNhapAction = (thongTinDangNhap) => {
 
             localStorage.setItem(USER_LOGIN, userLogin);
             localStorage.setItem("accessToken", result.accessToken);
+            
             history.push('/');
 
         } catch (error) {
