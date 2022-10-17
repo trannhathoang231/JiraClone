@@ -4,10 +4,12 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {connect} from 'react-redux'
 import * as Yup from 'yup';
+import { projectCategoryAction } from "../../../redux/action/ProjectCategoryAction";
+import { updateProjectAction } from "../../../redux/action/ProjectCyberBugsAction";
 
 function FormEditProject(props) {
-    const arrProjectCategory = useSelector(state => state.ProjectCategoryreducer)
-
+    const arrProjectCategory = useSelector(state => state.ProjectCategoryReducer.arrProjectCategory) 
+        // console.log('arrProjectCategory',arrProjectCategory)
     const dispatch = useDispatch();
 
     const {
@@ -27,11 +29,10 @@ function FormEditProject(props) {
     useEffect(() => {
 
         //Goi api load project category
-        dispatch({type: 'GET_ALL_PROJECT_CATEGORY_SAGA'})
+        dispatch(projectCategoryAction())
 
         //Load su kien submit len drawer nut submit
         dispatch({ type: 'SET_SUBMIT_EDIT_PROJECT', submitFunction: handleSubmit });
-
 
 
     },[])
@@ -45,6 +46,7 @@ function FormEditProject(props) {
     <form className="container-fluid" onSubmit={handleSubmit}>
       <div className="row">
         <div className="col-4">
+
           <div className="form-group">
             <p className="font-weight-bold">Project id</p>
             <input value={values.id} disabled className="form-control" name="id" />
@@ -59,9 +61,9 @@ function FormEditProject(props) {
         <div className="col-4">
           <div className="form-group">
             <p className="font-weight-bold">Project Category</p>
-            <select className="form-control" name="" valuedefault={values.categoryId}>
+            <select className="form-control" name="categoryId" value={values.categoryId}>
                 {arrProjectCategory?.map((item,index)=>{
-                  console.log(arrProjectCategory,'arrPro')
+                //   console.log(arrProjectCategory,'arrProjectCategory')
                    return <option key={index} value={item.id}>{item.projectCategoryName}</option>
                 })}
             </select>
@@ -75,8 +77,7 @@ function FormEditProject(props) {
             <Editor
 
               name="description123"
-              initialValue={values.categoryId}
-            //   value={values.description}
+              value={values.description}
               init={{
                 selector: "textarea#myTextArea",
                 height: 500,
@@ -119,11 +120,8 @@ const EditProjectForm = withFormik({
 
     }),
     handleSubmit: (values, { props, setSubmiting}) => {
-     
-        props.dispatch({
-            type:'UPDATE_PROJECT_SAGA',
-            projectUpdate:values
-        })
+        console.log('values',values);
+        props.dispatch(updateProjectAction(values))
 
     },
     displayName: 'EditProjectForm',

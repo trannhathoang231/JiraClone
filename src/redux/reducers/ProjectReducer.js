@@ -5,7 +5,7 @@ const initialState = {
     projectName: "string",
     creator: 0,
     description: "string",
-    categoryId: "<h1>dsdsd</h1>",
+    categoryId: "2",
   },
   projectDetail: {
     members:[]

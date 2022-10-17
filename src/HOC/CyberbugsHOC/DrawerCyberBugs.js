@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 export default function DrawerCyberBugs(props) {
+    
   const { visible, ComponentContentDrawer, callBackSubmit, title } = useSelector(
     (state) => state.DrawerReducer
   );

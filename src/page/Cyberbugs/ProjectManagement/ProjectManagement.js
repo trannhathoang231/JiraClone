@@ -130,6 +130,12 @@ export default function ProjectManagement(props) {
 
               //dispatch len reducer noi dung drawer
               dispatch(action)
+              //dispatch du lieu dong hien tai len reducer
+              const actionEditProject = {
+                type:'EDIT_PROJECT',
+                projectEditModel:record
+              }
+              dispatch(actionEditProject)
             }}>
               <EditOutlined style={{ fontSize: 17 }} />
             </button>

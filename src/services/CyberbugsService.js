@@ -29,6 +29,18 @@ class CyberbugsService extends BaseServices {
 
     // }
 
+    createProject = (newProject) => {
+        return this.post(`/api/Project/createProject`,newProject)
+    }
+
+    createProjectAuthorization = (newProject) => {
+        return this.post(`/api/Project/createProjectAuthorize`,newProject)
+    }
+
+    updateProject = (projectUpdate) => {
+        return this.put(`/api/Project/updateProject?projectId=${projectUpdate.id}`,projectUpdate)
+    }
+
 }
 
 export const cyberbugsService = new CyberbugsService();

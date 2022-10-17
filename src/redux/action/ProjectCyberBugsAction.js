@@ -1,4 +1,6 @@
 import axios from "axios";
+import { history } from "../../App";
+import { cyberbugsService } from "../../services/CyberbugsService";
 import { DOMAIN_CYBERBUG, TOKEN } from "../../ulti/constants/settingSystem";
 
 
@@ -15,7 +17,7 @@ export const getAllProjectAction = () => {
                     'TokenCybersoft': `${TOKEN}`
                 }
             });
-            console.log(result, 'result')
+            // console.log(result, 'result')
             dispatch({
                 type: 'GET_LIST_PROJECT',
                 projectList: result.data.content
@@ -23,6 +25,34 @@ export const getAllProjectAction = () => {
             })
 
         } catch (err) {
+            console.log(err, 'error')
+        }
+    }
+}
+
+export const createProjectAction = (newProject) => {
+    // console.log('actionCreateProject',action);
+    return async (dispatch) => {
+        try{
+            const result = await cyberbugsService.createProjectAuthorization(newProject);
+            // console.log('result',result);
+            history.push('/projectmanagement');
+        }catch (err) {
+            console.log(err, 'error')
+        }
+    }
+}
+
+export const updateProjectAction = (updateProject) => {
+    return async (dispatch) => {
+        try{
+            const result = await cyberbugsService.updateProject(updateProject);
+            console.log('result',result);
+
+            // history.push('/projectmanagement');
+            dispatch(getAllProjectAction());
+            dispatch({ type: "CLOSE_DRAWER" });
+        }catch (err) {
             console.log(err, 'error')
         }
     }

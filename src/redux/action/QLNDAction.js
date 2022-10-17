@@ -16,8 +16,9 @@ export const dangNhapAction = (thongTinDangNhap) => {
             })
 
             const userLogin = JSON.stringify(result);
-            localStorage.setItem(USER_LOGIN, userLogin);
 
+            localStorage.setItem(USER_LOGIN, userLogin);
+            localStorage.setItem("accessToken", result.accessToken);
             history.push('/');
 
         } catch (error) {
