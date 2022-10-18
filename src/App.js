@@ -20,11 +20,12 @@ function App() {
       <Switch>
         <UserLoginTemplate exact path="/login" Component={LoginCyberBugs} />
 
-        <CyberbugsTemplate exact path="/" Component={IndexCyberBugs}/>
-        <CyberbugsTemplate exact path="/cyberbugs" Component={IndexCyberBugs}/>
+        <CyberbugsTemplate exact path="/" Component={ProjectManagement}/>
+        {/* <CyberbugsTemplate exact path="/cyberbugs" Component={IndexCyberBugs}/> */}
         <CyberbugsTemplate exact path="/createproject" Component={CreateProject}/>
         <CyberbugsTemplate exact path="/projectmanagement" Component={ProjectManagement}/>
-        
+        <CyberbugsTemplate exact path="/projectdetail/:projectId" Component={IndexCyberBugs}/>
+
       </Switch>
 
     </Router>

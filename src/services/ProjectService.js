@@ -8,11 +8,11 @@ export class ProjectService extends BaseServices {
     }
 
     deleteProject = (id) => {
-        return this.delete(`/Project/deleteProject?projectId=${id}`)
+        return this.delete(`/api/Project/deleteProject?projectId=${id}`)
     }
 
     getProjectDetail = (projectId) => {
-        return this.get(`Project/getProjectDetail?id=${projectId}`);
+        return this.get(`/api/Project/getProjectDetail?id=${projectId}`);
     }
 
 }

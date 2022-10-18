@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 export default function MenuCyberbugs() {
+
   return (
     <div className="menu" style={{position:'fixed',marginLeft:'5%',zIndex:'1'}}>
       <div className="account">
@@ -14,10 +15,10 @@ export default function MenuCyberbugs() {
         </div>
       </div>
       <div className="control p-0">
-        <div>
+        {/* <div>
           <i className="fa fa-credit-card mr-1" />
           <NavLink className="text-dark" activeStyle={{color:'blue'}} to="/cyberbugs" activeClassName="active font-weight-bold text-primary">Cyber Board</NavLink>
-        </div>
+        </div> */}
 
         <div>
           <i className="fa fa-cog mr-1" />

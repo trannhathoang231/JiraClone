@@ -1,3 +1,4 @@
+import { PUT_PROJECT_DETAIL } from "../../ulti/constants/Cyberbugs/Cyberbugs";
 
 const initialState = {
   projectEdit: {
@@ -8,7 +9,7 @@ const initialState = {
     categoryId: "2",
   },
   projectDetail: {
-    members:[]
+    // members:[]
   }
 };
 
@@ -21,8 +22,9 @@ export const ProjectReducer = (state = initialState, action) => {
       return { ...state };
 
     }
-    case 'PUT_PROJECT_DETAIL': {
+    case PUT_PROJECT_DETAIL: {
         state.projectDetail = action.projectDetail;
+        console.log('projectDetail',action.projectDetail)
         return {...state}
     }
 
