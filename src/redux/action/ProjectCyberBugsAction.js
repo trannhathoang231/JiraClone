@@ -1,9 +1,7 @@
-import axios from "axios";
 import { history } from "../../App";
 import { cyberbugsService } from "../../services/CyberbugsService";
 import { projectService } from "../../services/ProjectService";
 import { PUT_PROJECT_DETAIL } from "../../ulti/constants/Cyberbugs/Cyberbugs";
-import { DOMAIN_CYBERBUG, TOKEN } from "../../ulti/constants/settingSystem";
 
 import { GET_ALL_PROJECT, GET_ALL_TASK_TYPE, GET_ALL_PRIORITY } from './../types/ProjectCyberBugsType';
 

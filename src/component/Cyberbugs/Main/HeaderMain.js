@@ -17,9 +17,7 @@ export default function HeaderMain(props) {
         </ol>
       </nav>
         
-
     </div>
-
 
   );
 }

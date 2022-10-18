@@ -1,33 +1,23 @@
-import { Button, Space, Table, Tag, Divider, Avatar, Popover, AutoComplete } from "antd";
+import { Button, Space, Table, Tag,  Avatar, Popover, AutoComplete } from "antd";
 import React, { useState, useEffect, useRef } from "react";
-import ReactHtmlParser from "react-html-parser";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import FormEditProject from "../../../component/Forms/FormEditProject/FormEditProject";
-import axios from 'axios'
-import { DOMAIN_CYBERBUG } from "../../../ulti/constants/settingSystem";
 import { getAllProjectAction } from "../../../redux/action/ProjectCyberBugsAction";
 import { DeleteProjectAction } from "../../../redux/action/DeleteProjectAction";
-import { message, Popconfirm } from 'antd';
+import {  Popconfirm } from 'antd';
 import { addUserProjectAction, deleteUserFromProject, getAllUser } from "../../../redux/action/UserCyberBugsAction";
 import { NavLink } from "react-router-dom";
 
 
 
 export default function ProjectManagement(props) {
-  //lấy dữ liệu từ reducer
   const { projectList } = useSelector(state => state.ProjectCyberBugsReducer);
-
   const {userSearch} = useSelector(state => state.UserLoginCyberBugsReducer)
-
   const [value,setValue] = useState('')
-
   const searchRef = useRef(null);
- 
-  // sử dụng useDispatch để gọi action
   const dispatch = useDispatch();
 
-//   console.log(projectList, 'projectlist')
   const [state, setState] = useState({
     filteredInfo: null,
     sortedInfo: null,
@@ -38,8 +28,7 @@ export default function ProjectManagement(props) {
   }, [])
 
 
-  const handleChange = (pagination, filters, sorter) => {
-    // console.log("Various parameters", pagination, filters, sorter);
+  const handleChange = ( filters, sorter) => {
     setState({
       filteredInfo: filters,
       sortedInfo: sorter,
@@ -66,9 +55,9 @@ export default function ProjectManagement(props) {
     });
   };
 
-  let { sortedInfo, filteredInfo } = state;
-  sortedInfo = sortedInfo || {};
-  filteredInfo = filteredInfo || {};
+//   let { sortedInfo, filteredInfo } = state;
+//   sortedInfo = sortedInfo || {};
+//   filteredInfo = filteredInfo || {};
 
   const columns = [
     {
@@ -196,7 +185,7 @@ export default function ProjectManagement(props) {
     {
       title: "Action",
       key: "action",
-      render: (text, record, index) => {
+      render: (record) => {
         return (
           <div>
             <button className="btn mr-2 btn-primary" onClick={() => {
@@ -205,10 +194,10 @@ export default function ProjectManagement(props) {
                 Component: <FormEditProject />
               }
 
-              //dispatch len reducer noi dung drawer
+              //dispatch lên reducer nội dung drawer
               dispatch(action)
 
-              //dispatch du lieu dong hien tai len reducer
+              //dispatch dữ liệu dòng hiện tại lên reducer
               const actionEditProject = {
                 type:'EDIT_PROJECT',
                 projectEditModel:record

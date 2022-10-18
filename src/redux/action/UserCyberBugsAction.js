@@ -24,10 +24,6 @@ export const addUserProjectAction = ({projectId,userId}) => {
     return async (dispatch) => {
         try {
             const result = await userService.assignUserProject({projectId,userId});
-            // dispatch({
-            //     type:'ADD_USER_PROJECT_API',
-            //     userProject: result
-            // })
             console.log(result,'result')
             dispatch(getAllProjectAction())
         } catch (err) {
@@ -40,10 +36,6 @@ export const deleteUserFromProject = ({projectId,userId}) => {
     return async (dispatch) => {
         try {
             const result = await userService.deleteUserFromProject({projectId,userId});
-            // dispatch({
-            //     type:'ADD_USER_PROJECT_API',
-            //     userProject: result
-            // })
             console.log(result,'result')
             dispatch(getAllProjectAction())
         } catch (err) {

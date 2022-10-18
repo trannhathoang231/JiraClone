@@ -9,7 +9,6 @@ import { updateProjectAction } from "../../../redux/action/ProjectCyberBugsActio
 
 function FormEditProject(props) {
     const arrProjectCategory = useSelector(state => state.ProjectCategoryReducer.arrProjectCategory) 
-        // console.log('arrProjectCategory',arrProjectCategory)
     const dispatch = useDispatch();
 
     const {
@@ -19,13 +18,6 @@ function FormEditProject(props) {
         setFieldValue
     } = props;
 
-
-    const submitForm = (e) => {
-        e.preventDefault();
-        alert('submit edit')
-    }
-
-    //componentDidMount
     useEffect(() => {
 
         //Goi api load project category
@@ -63,7 +55,6 @@ function FormEditProject(props) {
             <p className="font-weight-bold">Project Category</p>
             <select className="form-control" name="categoryId" value={values.categoryId} onChange={handleChange} >
                 {arrProjectCategory?.map((item,index)=>{
-                //   console.log(arrProjectCategory,'arrProjectCategory')
                    return <option key={index} value={item.id}>{item.projectCategoryName}</option>
                 })}
             </select>
@@ -100,9 +91,6 @@ function FormEditProject(props) {
 }
 
 
-
-
-
 const EditProjectForm = withFormik({
     enableReinitialize: true,
     mapPropsToValues:(props) => {
@@ -128,7 +116,6 @@ const EditProjectForm = withFormik({
 })(FormEditProject);
 
 const mapStateToProps = (state) => ({
-    //ko dùng selector vì lấy đưa vào formik chứ ko phải lấy đưa vào component trực tiếp
     projectEdit: state.ProjectReducer.projectEdit   
 
 })
