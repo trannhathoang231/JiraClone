@@ -32,6 +32,7 @@ function FormCreateTask(props) {
 
   const {
     handleChange,
+    handleSubmit,
     setFieldValue
   } = props;
 
