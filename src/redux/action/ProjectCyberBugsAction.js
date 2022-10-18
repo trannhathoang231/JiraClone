@@ -1,7 +1,7 @@
-import axios from "axios";
 import { history } from "../../App";
 import { cyberbugsService } from "../../services/CyberbugsService";
-import { DOMAIN_CYBERBUG, TOKEN } from "../../ulti/constants/settingSystem";
+import { projectService } from "../../services/ProjectService";
+import { PUT_PROJECT_DETAIL } from "../../ulti/constants/Cyberbugs/Cyberbugs";
 
 import { GET_ALL_PROJECT, GET_ALL_TASK_TYPE, GET_ALL_PRIORITY } from './../types/ProjectCyberBugsType';
 
@@ -103,6 +103,23 @@ export const updateProjectAction = (updateProject) => {
             dispatch({ type: "CLOSE_DRAWER" });
         }catch (err) {
             console.log(err, 'error')
+        }
+    }
+}
+
+export const getProjectDetailAction = (projectId) => {
+
+    return async (dispatch) => {
+        try {
+            const result = await projectService.getProjectDetail(projectId);
+            console.log('result',result);
+            dispatch({
+                type: PUT_PROJECT_DETAIL,
+                projectDetail:result
+            })
+        } catch (err) {
+            console.log(err, 'error')
+            history.push('/projectmagagement')
         }
     }
 }

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import {  useDispatch } from 'react-redux';
 
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
-    VideoCameraOutlined,
     PlusOutlined,
     SearchOutlined,
 } from '@ant-design/icons';
