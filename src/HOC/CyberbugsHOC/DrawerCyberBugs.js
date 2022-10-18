@@ -32,10 +32,6 @@ export default function DrawerCyberBugs(props) {
   };
   return (
     <>
-      {/* <Button type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
-        {" "}
-        New account
-      </Button> */}
       <Drawer
         title={title}
         width={720}

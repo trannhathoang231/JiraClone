@@ -1,24 +1,23 @@
-import { Button, Space, Table, Tag, Divider } from "antd";
-import React, { useState, useEffect } from "react";
-import ReactHtmlParser from "react-html-parser";
+import { Button, Space, Table, Tag,  Avatar, Popover, AutoComplete } from "antd";
+import React, { useState, useEffect, useRef } from "react";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import FormEditProject from "../../../component/Forms/FormEditProject/FormEditProject";
-import axios from 'axios'
-import { DOMAIN_CYBERBUG } from "../../../ulti/constants/settingSystem";
 import { getAllProjectAction } from "../../../redux/action/ProjectCyberBugsAction";
 import { DeleteProjectAction } from "../../../redux/action/DeleteProjectAction";
-import { message, Popconfirm } from 'antd';
+import {  Popconfirm } from 'antd';
+import { addUserProjectAction, deleteUserFromProject, getAllUser } from "../../../redux/action/UserCyberBugsAction";
+import { NavLink } from "react-router-dom";
 
 
 
 export default function ProjectManagement(props) {
-  //lấy dữ liệu từ reducer
   const { projectList } = useSelector(state => state.ProjectCyberBugsReducer);
-  // sử dụng useDispatch để gọi action
+  const {userSearch} = useSelector(state => state.UserLoginCyberBugsReducer)
+  const [value,setValue] = useState('')
+  const searchRef = useRef(null);
   const dispatch = useDispatch();
 
-  console.log(projectList, 'projectlist')
   const [state, setState] = useState({
     filteredInfo: null,
     sortedInfo: null,
@@ -29,8 +28,7 @@ export default function ProjectManagement(props) {
   }, [])
 
 
-  const handleChange = (pagination, filters, sorter) => {
-    console.log("Various parameters", pagination, filters, sorter);
+  const handleChange = ( filters, sorter) => {
     setState({
       filteredInfo: filters,
       sortedInfo: sorter,
@@ -57,73 +55,137 @@ export default function ProjectManagement(props) {
     });
   };
 
-  let { sortedInfo, filteredInfo } = state;
-  sortedInfo = sortedInfo || {};
-  filteredInfo = filteredInfo || {};
+//   let { sortedInfo, filteredInfo } = state;
+//   sortedInfo = sortedInfo || {};
+//   filteredInfo = filteredInfo || {};
 
   const columns = [
     {
       title: "id",
       dataIndex: "id",
       key: "id",
-      //!sorter
-      // sorter:(item1,item2) =>{
-      //   return Number(item2.id - item1.id)
-      // },
-      // sortDirections:['descend']
+
     },
     {
       title: "projectName",
       dataIndex: "projectName",
       key: "projectName",
-      //!sorter
-      // sorter: (item2,item1) =>{
-      //   let projectName1 = item1.projectName?.trim().toLowerCase();
-      //   let projectName2 = item2.projectName?.trim().toLowerCase();
-      //   if(projectName2 < projectName1) {
-      //       return -1;
-      //   }
-      //   return 1;
-      // },
-
+      render: (text,record,index)=> {
+        return <NavLink to={`/projectdetail/${record.id}`}> {text}</NavLink>
+      }
     },
     {
       title: 'category',
       dataIndex: 'categoryName',
       key: 'categoryId',
-      //!sorter
-      // sorter: (item2,item1) =>{
-      //   let categoryName1 = item1.categoryName?.trim().toLowerCase();
-      //   let categoryName2 = item2.categoryName?.trim().toLowerCase();
-      //   if(categoryName2 < categoryName1) {
-      //       return -1;
-      //   }
-      //   return 1;
-      // },
+      
     },
     {
+        title: 'creator',
+        key:'creator',
+        render:(text,record,index) => {
+            return <Tag color="green">{record.creator?.name}</Tag>
+        },
+        sorter: (item2,item1) =>{
+            let creator1 = item1.creator?.name.trim().toLowerCase();
+            let creator2 = item2.creator?.name.trim().toLowerCase();
+            if (creator2 < creator1) {
+                return -1
+            }
+            return 1
+        }
+    },
+    {    
       title: 'members',
-      // dataIndex:'name',
-      key: 'userId',
+      key: 'members',
       render(text, record, index) {
-        return record.members.map((item, i) => {
-          return <Tag key={i} color='green' style={{ display: 'inline-block' }}>{item.name}</Tag>
-        })
+        return <div>
+            {record.members?.slice(0,3).map((member,index) =>{
+                return (
+                <Popover key={index} placement="top" title="members" content ={()=>{
+                    return <table className="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>avatar</th>
+                                <th>name</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {record.members?.map((item,index)=>{
+                               return <tr key={index}>
+                                    <td>{item.userId}</td>
+                                    <td><img src={item.avatar} width="30" height="30" style={{borderRadius:'15px'}} alt="member"/></td>
+                                    <td>{item.name}</td>
+                                    <td>
+                                        <button onClick={()=>{
+                                            dispatch(deleteUserFromProject({projectId:record.id,userId:item.userId}))
+                                        }} className="btn btn-danger" style={{borderRadius:'50%'}}>X</button>
+                                    </td>
+                                </tr>
+                            })}
+                        </tbody>
+                    </table>
+                }}>
+                    <Avatar key={index} src={member.avatar}/>
+                </Popover>
+                )
+            })}
+
+            {record.members?.length > 3 ? <Avatar>...</Avatar> : ''}
+
+            <Popover placement="rightTop" title={"Add user"} content={()=>{
+                return <AutoComplete 
+                options={userSearch?.map((user,index)=>{
+                    return {label:user.name,value:user.userId.toString()}
+                })}
+
+                value={value}
+
+                onChange={(text)=>{
+                    setValue(text)
+                }}
+
+                onSelect={(valueSelect,option)=>{
+                    console.log('valueSelect',valueSelect)
+                    console.log(' record.id',record.id)
+                    //set gia tri cua hop thoai = option.label
+                    setValue(option.label)  
+                    //*goi api gui ve be
+                    // dispatch({
+                    //     type:'ADD_USER_PROJECT_API',
+                    //    userProject:{
+                    //     "projectId":record.id,
+                    //     "userId":addUserProjectAction(valueSelect)
+                    //    }
+                    // })
+                    dispatch(addUserProjectAction({projectId : record.id, userId : valueSelect}))
+                }}
+
+                style={{width:'100%'}} onSearch={(value)=>{
+
+                    if(searchRef.current){
+                        clearTimeout(searchRef.current)
+                    }
+                    searchRef.current = setTimeout(()=>{
+                        dispatch(getAllUser(value))
+                    },300)
+
+                   
+
+                }}/>
+            }} trigger="click">
+                <Button style={{borderRadius:'50%'}}>+</Button>
+            </Popover>
+        </div>
       }
-      //!sorter
-      // sorter: (item2,item1) =>{
-      //   let creator1 = item1.creator.name?.trim().toLowerCase();
-      //   let creator2 = item2.creator.name?.trim().toLowerCase();
-      //   if(creator2 < creator1) {
-      //       return -1;
-      //   }
-      //   return 1;
-      // },
+     
     },
     {
       title: "Action",
       key: "action",
-      render: (text, record, index) => {
+      render: (record) => {
         return (
           <div>
             <button className="btn mr-2 btn-primary" onClick={() => {
@@ -132,10 +194,10 @@ export default function ProjectManagement(props) {
                 Component: <FormEditProject />
               }
 
-              //dispatch len reducer noi dung drawer
+              //dispatch lên reducer nội dung drawer
               dispatch(action)
 
-              //dispatch du lieu dong hien tai len reducer
+              //dispatch dữ liệu dòng hiện tại lên reducer
               const actionEditProject = {
                 type:'EDIT_PROJECT',
                 projectEditModel:record

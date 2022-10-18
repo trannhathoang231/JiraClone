@@ -22,20 +22,16 @@ function FormCreateTask(props) {
   const { arrPriority } = useSelector(state => state.ProjectCyberBugsReducer);
   const { userSearch } = useSelector(state => state.UserLoginCyberBugsReducer);
   console.log('userSearch', userSearch);
+
   const userOption = userSearch.map((item, index) => {
     return { value: item.userId, label: item.name }
   })
 
+
   const dispatch = useDispatch();
 
   const {
-    values,
-    touched,
-    errors,
     handleChange,
-    handleBlur,
-    handleSubmit,
-    setValues,
     setFieldValue
   } = props;
 
@@ -99,6 +95,7 @@ function FormCreateTask(props) {
             <Select
               mode="tags"
               placeholder="Please select"
+
               options={userOption}
               optionFilterProp='label'
               onChange={(values) => {

@@ -1,5 +1,7 @@
-
-import { GET_ALL_PROJECT, GET_ALL_TASK_TYPE, GET_ALL_PRIORITY } from './../types/ProjectCyberBugsType';
+import {
+  GET_ALL_TASK_TYPE,
+  GET_ALL_PRIORITY,
+} from "./../types/ProjectCyberBugsType";
 const stateDefault = {
 
   projectList: [
@@ -45,3 +47,4 @@ export const ProjectCyberBugsReducer = (state = stateDefault, action) => {
   }
 
 }
+

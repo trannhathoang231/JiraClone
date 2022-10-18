@@ -21,8 +21,6 @@ export default function LoginCyberBugs(props) {
     }),
 
     onSubmit: values => {
-      // console.log(values);
-
       let action = dangNhapAction(values);
       dispatch(action);
     },

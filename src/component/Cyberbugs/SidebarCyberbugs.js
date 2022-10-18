@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { Layout, Menu } from 'antd';
 import FormCreateTask from '../Forms/FormCreateTask/FormCreateTask';
 
+
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
-    VideoCameraOutlined,
     PlusOutlined,
     SearchOutlined,
 } from '@ant-design/icons';
