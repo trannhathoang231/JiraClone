@@ -6,9 +6,10 @@ export class UserService extends BaseServices {
         super();
     }
 
-    getUser = (keyword) => {
 
-        return this.get(`/api/Users/getUser?keyword=${keyword}`);
+    getUser = (keyWord) => {
+        return this.get(`/api/Users/getUser?keyword=${keyWord}`);
+
     }
 
 
