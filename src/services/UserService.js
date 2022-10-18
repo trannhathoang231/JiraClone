@@ -7,8 +7,8 @@ export class UserService extends BaseServices {
     }
 
     getUser = (keyWord) => {
-
-        return this.get(`Users/getUser?keyWord=${keyWord}`);
+        // return this.get(`Users/getUser?keyWord=${keyWord}`);
+        return this.get(`/api/Users/getUser?keyword=${keyWord}`);
     }
 
 
