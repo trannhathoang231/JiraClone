@@ -1,58 +1,64 @@
 import React from 'react'
+import './ContentMain.css'
 
 export default function ContentMain(props) {
 
-    const {projectDetail} = props;
-
+    const { projectDetail } = props;
+    console.log(projectDetail, 'tasklist')
     const renderCardTaskList = () => {
-        return projectDetail.lstTask?.map((taskListDt,index)=> {
-            return <div key={index} className="card" style={{ width: '25%', height: '25rem' }}>
-            <div className="card-header">
-                BACKLOG 3
-            </div>
-            <ul className="list-group list-group-flush">
-                <li className="list-group-item" data-toggle="modal" data-target="#infoModal" style={{ cursor: 'pointer' }}>
-                    <p>
-                        Each issue has a single reporter but can have multiple
-                        assignees
-                    </p>
-                    <div className="block" style={{ display: 'flex' }}>
-                        <div className="block-right">
-                            <div className="avatar-group" style={{ display: 'flex' }}>
-                                <div className="avatar-block">
-                                    <img src="https://res.cloudinary.com/fpt-food/image/upload/v1639680442/FPT%20FOOD/Jira_Bugs_Clone/ironman_tvda3m.jpg" alt="avatar.jpg" />
+        return projectDetail.lstTask?.map((taskListDt, index) => {
+            return <div key={index} className="card pb-5" style={{ width: '25%', height: 'auto', boxShadow: ' rgba(0, 0, 0, 0.24) 0px 3px 8px' }}>
+                <div className="card-header">
+                    BACKLOG 3
+                </div>
+                <ul className="list-group list-group-flush">
+                    {taskListDt.lstTaskDeTail?.map((task, index) => {
+                        console.log(task, 'lstTask')
+                        return <li key={index} className="list-group-item" data-toggle="modal" data-target="#infoModal" style={{ cursor: 'pointer' }}>
+                            <p>
+                                {task.taskName}
+                            </p>
+                            <div className="block" style={{ display: 'flex' }}>
+                                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                    <div style={{ width: 'auto', height: 24, lineHeight: '34px' }}>
+                                        <div style={{ cursor: 'pointer' }}>
+                                           <span style={{fontWeight:'bold',color:'#d40000',fontSize:'0.8rem'}}>{task.priorityTask.priority}</span>
+                                        </div>
+                                    </div>
+                                    <div style={{ width: 24, height: 24, lineHeight: '34px' }}>
+                                        <div style={{ cursor: 'pointer' }}>
+                                           
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="avatar-block">
-                                    <img src="https://res.cloudinary.com/fpt-food/image/upload/v1639680442/FPT%20FOOD/Jira_Bugs_Clone/spiderman_z2e5kw.jpg" alt="avatar.jpg" />
+                                <div className="block-right">
+                                    <div className="avatar-group" style={{ display: 'flex' }}>
+                                        <div className="avatar-block">
+                                            {task.assigness?.map((mem, index) => {
+                                                return <span className='user' key={index} >
+                                                    <img src={mem.avatar} alt={mem.avatar} />
+                                                </span>
+                                            })}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <div style={{ width: 24, height: 24, lineHeight: '34px' }}>
-                                <div style={{ cursor: 'pointer' }}>
-                                    <i className="fa fa-bookmark" style={{ fontSize: 18 }} />
-                                </div>
-                            </div>
-                            <div style={{ width: 24, height: 24, lineHeight: '34px' }}>
-                                <div style={{ cursor: 'pointer' }}>
-                                    <i className="fa fa-arrow-up" style={{ fontSize: 18 }} />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
 
-            </ul>
-        </div>
+                            </div>
+                        </li>
+                    })}
+
+
+                </ul>
+            </div>
         })
     }
 
     return (
-        
-        <div className="content" style={{ display: 'flex',width:'fit-content',width:'100%',margin:'0'}}>
 
+        <div className="content" style={{ display: 'flex', width: '100%', margin: '0', paddingBottom: '100px' }}>
             {renderCardTaskList()}
         </div>
+
     )
 }
 

@@ -18,3 +18,15 @@ export const createTask = (taskObject) => {
         }
     }
 }
+
+export const getStatus = ()=>{
+    return async (dispatch)=>{
+        try {
+            const result = await taskService.getStatus();
+            console.log(result,'status')
+            dispatch()
+        }catch(err) {
+            console.log(err,'status')
+        }
+    }
+}
