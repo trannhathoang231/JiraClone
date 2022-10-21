@@ -1,15 +1,20 @@
 const initialState = {
-    arrStatus:[]
+  arrStatus: {
+    "taskId": 0,
+    "statusId": "string"
+
+  }
 }
 
-export const StatusReducer =  (state = initialState, action) => {
+export const StatusReducer = (state = initialState, action) => {
   switch (action.type) {
-            case 'GET_ALL_STATUS':{
-                state.arrStatus = action.arrStatus
-                return {...state}
-            }
- 
-  default:
-    return state
+    case 'UPDATE_STATUS': {
+      state.arrStatus = action.arrStatus
+      // console.log(action.arrStatus)
+      return { ...state }
+    }
+
+    default:
+      return state
   }
 }

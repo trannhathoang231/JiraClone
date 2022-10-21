@@ -55,9 +55,9 @@ export default function ProjectManagement(props) {
     });
   };
 
-//   let { sortedInfo, filteredInfo } = state;
-//   sortedInfo = sortedInfo || {};
-//   filteredInfo = filteredInfo || {};
+  let { sortedInfo, filteredInfo } = state;
+  sortedInfo = sortedInfo || {};
+  filteredInfo = filteredInfo || {};
 
   const columns = [
     {
@@ -67,7 +67,7 @@ export default function ProjectManagement(props) {
        sorter:(item1,item2) =>{
         return Number(item2.id - item1.id)
       },
-      sortDirections:['descend']
+ 
 
     },
     {

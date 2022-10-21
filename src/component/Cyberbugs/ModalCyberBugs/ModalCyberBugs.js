@@ -3,14 +3,13 @@ import { useSelector, useDispatch } from 'react-redux'
 import ReactHtmlParser from 'react-html-parser'
 export default function ModalCyberBugs(props) {
   const { taskDetailModal } = useSelector(state => state.TaskReducer);
-  const { arrStatus } = useSelector(state => state.StatusReducer)
-  console.log(taskDetailModal, 'taskDetailModal')
+  const {projectDetail} = useSelector (state => state.ProjectReducer)
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: 'GET_ALL_STATUS' })
-    console.log(arrStatus, 'status')
-  })
+    // console.log(arrStatus, 'status')
+  },[])
   const renderDescription = () => {
     const jsxDescriptioon = ReactHtmlParser(taskDetailModal.description);
     return jsxDescriptioon;
@@ -96,9 +95,9 @@ export default function ModalCyberBugs(props) {
                   <div className="status">
                     <h6>STATUS</h6>
                     <select className="custom-select">
-                      {/* {arrStatus.map((status, index) => {
-                        return <option key={index}>{status.statusNmae}</option>
-                      })} */}
+                      {projectDetail.lstTask?.map((status, index) => {
+                        return <option key={index}>{status.statusName}</option>
+                      })}
                     </select>
                   </div>
                   <div className="assignees">

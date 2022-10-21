@@ -9,8 +9,8 @@ export class TaskService extends BaseServices {
     createTask = (taskObject) => {
         return this.post('/api/Project/createTask', taskObject);
     }
-    getStatus = () =>{
-        return this.get('/api/Status/getAll')
+    updateStatus = (arrStatus) =>{
+        return this.put('/api/Project/updateStatus',arrStatus)
     }
 
 }

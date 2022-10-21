@@ -19,12 +19,12 @@ export const createTask = (taskObject) => {
     }
 }
 
-export const getStatus = ()=>{
+export const updateStatusAction = (action)=>{
     return async (dispatch)=>{
         try {
-            const result = await taskService.getStatus();
+            const result = await taskService.updateStatus(action);
             console.log(result,'status')
-            dispatch()
+            dispatch({type:'UPDATE_STATUS', arrStatus: result})
         }catch(err) {
             console.log(err,'status')
         }
