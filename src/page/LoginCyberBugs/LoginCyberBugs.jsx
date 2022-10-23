@@ -3,8 +3,8 @@ import { UserOutlined, LockOutlined, FacebookOutlined, TwitterOutlined } from '@
 import { Input, Button, Space } from 'antd';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { dangNhapAction } from './../../redux/action/QLNDAction';
 import { useDispatch } from 'react-redux';
+import { loginAction } from '../../redux/action/UserCyberBugsAction';
 
 export default function LoginCyberBugs(props) {
   let dispatch = useDispatch();
@@ -21,7 +21,7 @@ export default function LoginCyberBugs(props) {
     }),
 
     onSubmit: values => {
-      let action = dangNhapAction(values);
+      let action = loginAction(values);
       dispatch(action);
     },
   });
