@@ -4,7 +4,7 @@ import { Select, Slider } from 'antd';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch, connect } from 'react-redux';
 import { getListProjectAction, getAllTaskType, getAllPriority } from './../../../redux/action/ProjectCyberBugsAction';
-import { getAllUser } from './../../../redux/action/UserCyberBugsAction';
+import { getUserByProjectId, getUserSearchByProjectId } from './../../../redux/action/UserCyberBugsAction';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { createTask } from './../../../redux/action/TaskAction';
@@ -21,12 +21,12 @@ function FormCreateTask(props) {
   const { arrProject } = useSelector(state => state.ProjectCyberBugsReducer);
   const { arrTaskType } = useSelector(state => state.ProjectCyberBugsReducer);
   const { arrPriority } = useSelector(state => state.ProjectCyberBugsReducer);
-  const { userSearch } = useSelector(state => state.UserLoginCyberBugsReducer);
+  const { arrUser } = useSelector(state => state.UserLoginCyberBugsReducer);
   const { arrStatus } = useSelector(state => state.StatusReducer);
 
-  console.log('userSearch', userSearch);
+  console.log('userSearch', arrUser);
 
-  const userOption = userSearch.map((item, index) => {
+  const userOption = arrUser.map((item, index) => {
     return { value: item.userId, label: item.name }
   })
 
@@ -56,13 +56,23 @@ function FormCreateTask(props) {
 
     const action6 = getAllStatus();
     dispatch(action6);
+
+    dispatch({
+      type: 'SET_SUBMIT_CREATE_TASK',
+      submitFunction: handleSubmit
+    })
   }, []);
 
   return (
     <form className='container' onSubmit={handleSubmit}>
       <div className='form-group'>
         <p>Project</p>
-        <select name="projectId" className='form-control' onChange={handleChange}>
+        <select name="projectId" className='form-control' onChange={(e) => {
+          let { value } = e.target;
+          const action7 = getUserByProjectId(value);
+          dispatch(action7);
+        }}>
+
           {arrProject.map((project, index) => {
             return <option key={index} value={project.id}>{project.projectName}</option>
           })}
@@ -117,7 +127,7 @@ function FormCreateTask(props) {
                 setFieldValue('listUserAsign', values)
               }}
               onSearch={(value) => {
-                const action4 = getAllUser(value);
+                const action4 = getUserSearchByProjectId(value);
                 dispatch(action4);
               }}
               style={{
@@ -191,7 +201,7 @@ function FormCreateTask(props) {
           }}
         />
       </div>
-      <button type='submit'>Submit</button>
+      {/* <button type='submit'>Submit</button> */}
     </form>
   )
 }
@@ -200,6 +210,11 @@ const frmCreateTask = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
     const { arrProject, arrTaskType, arrPriority, arrStatus } = props;
+
+    if (arrProject.length > 0) {
+      const action8 = getUserByProjectId(arrProject[0]?.id);
+      props.dispatch(action8);
+    }
 
     return {
       taskName: '',

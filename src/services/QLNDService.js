@@ -1,15 +1,15 @@
-import BaseServices from "./baseService";
+// import BaseServices from "./baseService";
 
-class QuanLyNguoiDungService extends BaseServices {
-  constructor() {
-    super();
-  }
+// class QuanLyNguoiDungService extends BaseServices {
+//   constructor() {
+//     super();
+//   }
 
-  dangNhap = (thongTinDangNhap) => { //email:'', matKhau:''
-    return this.post('/api/Users/signin', thongTinDangNhap);
-  };
+//   dangNhap = (thongTinDangNhap) => { //email:'', matKhau:''
+//     return this.post('/api/Users/signin', thongTinDangNhap);
+//   };
 
 
-}
+// }
 
-export const quanLyNguoiDungService = new QuanLyNguoiDungService();
+// export const quanLyNguoiDungService = new QuanLyNguoiDungService();
