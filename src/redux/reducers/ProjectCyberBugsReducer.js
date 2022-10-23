@@ -1,6 +1,8 @@
 import {
   GET_ALL_TASK_TYPE,
   GET_ALL_PRIORITY,
+  GET_LIST_PROJECT,
+  GET_ALL_PROJECT,
 } from "./../types/ProjectCyberBugsType";
 const stateDefault = {
 
@@ -17,13 +19,13 @@ const stateDefault = {
 export const ProjectCyberBugsReducer = (state = stateDefault, action) => {
   switch (action.type) {
 
-    case 'GET_LIST_PROJECT': {
+    case GET_LIST_PROJECT: {
       state.projectList = action.projectList;
       // console.log(action.projectList);
       return { ...state }
     }
 
-    case 'GET_ALL_PROJECT': {
+    case GET_ALL_PROJECT: {
       state.arrProject = action.arrProject;
 
       return { ...state }

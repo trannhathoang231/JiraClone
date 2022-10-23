@@ -55,15 +55,19 @@ export default function ProjectManagement(props) {
     });
   };
 
-//   let { sortedInfo, filteredInfo } = state;
-//   sortedInfo = sortedInfo || {};
-//   filteredInfo = filteredInfo || {};
+  let { sortedInfo, filteredInfo } = state;
+  sortedInfo = sortedInfo || {};
+  filteredInfo = filteredInfo || {};
 
   const columns = [
     {
       title: "id",
       dataIndex: "id",
       key: "id",
+       sorter:(item1,item2) =>{
+        return Number(item2.id - item1.id)
+      },
+ 
 
     },
     {
@@ -72,13 +76,28 @@ export default function ProjectManagement(props) {
       key: "projectName",
       render: (text,record,index)=> {
         return <NavLink to={`/projectdetail/${record.id}`}> {text}</NavLink>
-      }
+      },
+      sorter: (item2,item1) =>{
+        let projectName1 = item1.projectName?.trim().toLowerCase();
+        let projectName2 = item2.projectName?.trim().toLowerCase();
+        if(projectName2 < projectName1) {
+            return -1;
+        }
+        return 1;
+      },
     },
     {
       title: 'category',
       dataIndex: 'categoryName',
       key: 'categoryId',
-      
+            sorter: (item2,item1) =>{
+        let categoryName1 = item1.categoryName?.trim().toLowerCase();
+        let categoryName2 = item2.categoryName?.trim().toLowerCase();
+        if(categoryName2 < categoryName1) {
+            return -1;
+        }
+        return 1;
+      },
     },
     {
         title: 'creator',
@@ -179,7 +198,15 @@ export default function ProjectManagement(props) {
                 <Button style={{borderRadius:'50%'}}>+</Button>
             </Popover>
         </div>
-      }
+      },
+      sorter: (item2,item1) =>{
+        let creator1 = item1.creator.name?.trim().toLowerCase();
+        let creator2 = item2.creator.name?.trim().toLowerCase();
+        if(creator2 < creator1) {
+            return -1;
+        }
+        return 1;
+      },
      
     },
     {

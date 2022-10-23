@@ -23,7 +23,6 @@ export const ProjectReducer = (state = initialState, action) => {
       console.log("projectDetail", action.projectDetail);
       return { ...state };
     }
-
     default:
       return state;
   }
