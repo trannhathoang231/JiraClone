@@ -2,24 +2,34 @@ import BaseServices from "./baseService";
 
 export class UserService extends BaseServices {
 
-    constructor(){
+    constructor() {
         super();
     }
 
 
     getUser = (keyWord) => {
         return this.get(`/api/Users/getUser?keyword=${keyWord}`);
-
     }
 
-
-    assignUserProject = ({projectId,userId}) => {
-        return this.post(`/api/Project/assignUserProject`,{projectId,userId});
+    getUserByProjectId = (projectId) => {
+        return this.get(`/api/Users/getUserByProjectId?idProject=${projectId}`);
     }
 
-    deleteUserFromProject = ({projectId,userId}) => {
-        return this.post(`/api/Project/removeUserFromProject`,{projectId,userId})
+    assignUserProject = ({ projectId, userId }) => {
+        return this.post(`/api/Project/assignUserProject`, { projectId, userId });
     }
+
+    deleteUserFromProject = ({ projectId, userId }) => {
+        return this.post(`/api/Project/removeUserFromProject`, { projectId, userId })
+    }
+
+    login = (userInfo) => { //email:'', matKhau:''
+        return this.post('/api/Users/signin', userInfo);
+    };
+
+    register = (regisInfo) => {
+        return this.post('/api/Users/signup', regisInfo);
+    };
 }
 
 

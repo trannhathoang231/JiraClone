@@ -17,6 +17,7 @@ const rootReducer = combineReducers({
     ProjectCategoryReducer,
     TaskReducer,
     StatusReducer
+
 })
 const store = createStore(rootReducer, applyMiddleware(thunk));
 

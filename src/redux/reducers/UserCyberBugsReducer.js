@@ -1,4 +1,5 @@
-import { GET_USER_SEARCH } from "../types/UserCyberBugsType";
+import { GET_USER_SEARCH, GET_USER_BY_PROJECT_ID, GET_USER_SEARCH_BY_PROJECT_ID } from "../types/UserCyberBugsType";
+import { LOGIN } from './../types/UserCyberBugsType';
 
 const { USER_LOGIN } = require("../../ulti/constants/Cyberbugs/Cyberbugs");
 
@@ -11,6 +12,7 @@ if (localStorage.getItem(USER_LOGIN)) {
 const stateDefault = {
   userLogin: usLogin,
   userSearch: [],
+  arrUser: []
 };
 
 export const UserLoginCyberBugsReducer = (state = stateDefault, action) => {
@@ -18,6 +20,18 @@ export const UserLoginCyberBugsReducer = (state = stateDefault, action) => {
     case GET_USER_SEARCH: {
       state.userSearch = action.lstUserSearch;
       console.log("stateUser", state);
+      return { ...state };
+    }
+
+    case GET_USER_BY_PROJECT_ID: {
+      state.arrUser = action.arrUser;
+      // console.log("stateUser", state);
+      return { ...state };
+    }
+
+    case GET_USER_SEARCH_BY_PROJECT_ID: {
+      state.arrUser = action.arrUser;
+      // console.log("stateUser", state);
       return { ...state };
     }
 
