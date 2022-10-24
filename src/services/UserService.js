@@ -26,6 +26,10 @@ export class UserService extends BaseServices {
     login = (userInfo) => { //email:'', matKhau:''
         return this.post('/api/Users/signin', userInfo);
     };
+
+    register = (regisInfo) => {
+        return this.post('/api/Users/signup', regisInfo);
+    };
 }
 
 
