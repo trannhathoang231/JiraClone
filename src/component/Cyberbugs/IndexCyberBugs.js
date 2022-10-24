@@ -26,7 +26,7 @@ export default function IndexCyberBugs(props) {
 
       <InfoMain projectDetail={projectDetail} />
 
-      <ContentMain projectDetail={projectDetail} />
+      <ContentMain />
     </div>
   );
 }

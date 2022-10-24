@@ -1,36 +1,41 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './ContentMain.css'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { updateStatusAction } from '../../../redux/action/TaskAction';
+import { PUT_PROJECT_DETAIL } from '../../../ulti/constants/Cyberbugs/Cyberbugs';
+import { updateProjectAction } from '../../../redux/action/ProjectCyberBugsAction';
 export default function ContentMain(props) {
     const dispatch = useDispatch()
     const arrStatus = useSelector(state => state.StatusReducer.arrStatus)
-    const { projectDetail } = props;
+    const { projectDetail } = useSelector((state) => state.ProjectReducer);
     console.log(projectDetail, 'tasklist')
     const handleDragEnd = (result) => {
         let {projectId,taskId} = JSON.parse(result.draggableId)
         let {source,destination} = result
         console.log(projectId,taskId)
         console.log(result)
-        if(result.destination){
+        if(result.destination && source.index === destination.index && source.droppableId === destination.droppableId ){
             return;
         }
-        if(source.index === destination.index && source.droppableId === destination.droppableId ){
-            return;
-        }
+        
+        let statusColumn = projectDetail.lstTask[Number(source.droppableId)-1]
+        const tempTask = statusColumn.lstTaskDeTail.find(obj=> obj.taskId === taskId);
+        tempTask.statusId = destination.droppableId;
+        const destinationStatusColumn = projectDetail.lstTask[Number(destination.droppableId)-1]
+        destinationStatusColumn.lstTaskDeTail.push(tempTask);
+        statusColumn = statusColumn.lstTaskDeTail.filter(obj => obj.taskId !== tempTask.taskId)
+        let tempProjectLstTaskDetail = [...projectDetail.lstTask]
+        tempProjectLstTaskDetail[Number(source.droppableId)-1] ={...projectDetail.lstTask[Number(source.droppableId)-1], lstTaskDeTail: statusColumn}
+        tempProjectLstTaskDetail[Number(destination.droppableId)-1] = destinationStatusColumn
+        const tempProjectDetail = {...projectDetail, lstTask : tempProjectLstTaskDetail}
         const action = {
-            type:"UPDATE_STATUS",
-           arrStatus:{
-            "taskId":taskId,
-            "statusId":destination.droppableId,
-            "projectId":projectId
-           }
+            type:PUT_PROJECT_DETAIL,
+            projectDetail :tempProjectDetail
         }
         dispatch(action)
-    console.log(arrStatus,'arrStatus')
-
+        updateProjectAction(tempProjectDetail)(dispatch)
     }
     const renderCardTaskList = () => {
         return <DragDropContext onDragEnd={handleDragEnd}>
