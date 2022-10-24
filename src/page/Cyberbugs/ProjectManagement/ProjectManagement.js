@@ -7,9 +7,8 @@ import { getAllProjectAction } from "../../../redux/action/ProjectCyberBugsActio
 import { DeleteProjectAction } from "../../../redux/action/DeleteProjectAction";
 import {  Popconfirm } from 'antd';
 import { addUserProjectAction, deleteUserFromProject, getAllUser } from "../../../redux/action/UserCyberBugsAction";
-import { NavLink } from "react-router-dom";
-
-
+import { NavLink, Redirect } from "react-router-dom";
+import { USER_LOGIN } from "../../../redux/types/UserCyberBugsType";
 
 export default function ProjectManagement(props) {
   const { projectList } = useSelector(state => state.ProjectCyberBugsReducer);
@@ -257,6 +256,11 @@ export default function ProjectManagement(props) {
       },
     },
   ];
+
+  if (!localStorage.getItem(USER_LOGIN)) {
+    return <Redirect to="/login" />;
+  }
+
   return (
     <div className="container mt-5">
       <h3>Project Management</h3>

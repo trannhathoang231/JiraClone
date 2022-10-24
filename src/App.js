@@ -9,6 +9,7 @@ import LoginCyberBugs from './page/LoginCyberBugs/LoginCyberBugs';
 import CreateProject from "./page/Cyberbugs/CreateProject/CreateProject";
 import ProjectManagement from "./page/Cyberbugs/ProjectManagement/ProjectManagement";
 import { CyberbugsTemplate } from "./templates/HomeTemplate/CyberbugsTemplate";
+import RegisterCyberBugs from './page/RegisterCyberBugs/RegisterCyberBugs';
 
 export const history = createBrowserHistory();
 
@@ -19,6 +20,7 @@ function App() {
 
       <Switch>
         <UserLoginTemplate exact path="/login" Component={LoginCyberBugs} />
+        <UserLoginTemplate exact path="/register" Component={RegisterCyberBugs} />
 
         <CyberbugsTemplate exact path="/" Component={ProjectManagement}/>
         {/* <CyberbugsTemplate exact path="/cyberbugs" Component={IndexCyberBugs}/> */}
