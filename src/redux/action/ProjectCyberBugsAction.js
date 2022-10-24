@@ -93,6 +93,7 @@ export const createProjectAction = (newProject) => {
 }
 
 export const updateProjectAction = (updateProject) => {
+    console.log(updateProject,'action');
     return async (dispatch) => {
         try{
             const result = await cyberbugsService.updateProject(updateProject);
