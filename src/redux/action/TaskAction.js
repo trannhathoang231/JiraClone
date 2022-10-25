@@ -1,5 +1,6 @@
 import { taskService } from '../../services/TaskService';
 import { CREATE_TASK } from './../types/UserCyberBugsType';
+import swal from 'sweetalert';
 
 
 export const createTask = (taskObject) => {
@@ -12,9 +13,11 @@ export const createTask = (taskObject) => {
             //     type: CREATE_TASK,
             //     lstUserSearch: result
             // })
+            swal("Bạn đã thêm task thành công!", "", "success");
 
         } catch (err) {
-            console.log('error', err)
+            console.log('error', err);
+            swal(`${err.message}`, `${err.content}`, "error");
         }
     }
 }
