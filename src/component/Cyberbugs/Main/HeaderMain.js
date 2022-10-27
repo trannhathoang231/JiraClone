@@ -1,8 +1,7 @@
 import React from "react";
 
 export default function HeaderMain(props) {
-
-    const {projectDetail} = props;
+  const { projectDetail } = props;
 
   return (
     <div className="header">
@@ -16,8 +15,6 @@ export default function HeaderMain(props) {
           </li>
         </ol>
       </nav>
-        
     </div>
-
   );
 }

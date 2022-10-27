@@ -1,23 +1,21 @@
 import React, { useEffect } from "react";
-
 import { useSelector, useDispatch } from "react-redux";
 import { getProjectDetailAction } from "../../redux/action/ProjectCyberBugsAction";
-import {updateStatusAction} from '../../redux/action/TaskAction'
+import { updateStatusAction } from "../../redux/action/TaskAction";
 import ContentMain from "./Main/ContentMain";
 import HeaderMain from "./Main/HeaderMain";
 import InfoMain from "./Main/InfoMain";
 
 export default function IndexCyberBugs(props) {
   const { projectDetail } = useSelector((state) => state.ProjectReducer);
-  const { arrStatus } = useSelector(state => state.StatusReducer)
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     const { projectId } = props.match.params;
     dispatch(getProjectDetailAction(projectId));
-    const {arrStatus} = props.match.params;
-    dispatch(updateStatusAction(arrStatus))
+    const { arrStatus } = props.match.params;
+    dispatch(updateStatusAction(arrStatus));
   }, []);
 
   return (

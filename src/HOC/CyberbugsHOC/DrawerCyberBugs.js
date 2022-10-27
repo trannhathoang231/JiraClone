@@ -1,31 +1,11 @@
-import { PlusOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Col,
-  DatePicker,
-  Drawer,
-  Form,
-  Input,
-  Row,
-  Select,
-  Space,
-} from "antd";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { Button, Drawer } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function DrawerCyberBugs(props) {
-    
-  const { visible, ComponentContentDrawer, callBackSubmit, title } = useSelector(
-    (state) => state.DrawerReducer
-  );
+export default function DrawerCyberBugs() {
+  const { visible, ComponentContentDrawer, callBackSubmit, title } =
+    useSelector((state) => state.DrawerReducer);
 
   const dispatch = useDispatch();
-
-  console.log("visible", visible);
-
-  const showDrawer = () => {
-    dispatch({ type: "OPEN_DRAWER" });
-  };
 
   const onClose = () => {
     dispatch({ type: "CLOSE_DRAWER" });

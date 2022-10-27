@@ -474,4 +474,6 @@
     font-size: 14px;
   }
   
-  
+.tox-notifications-container{
+    display: none;
+}

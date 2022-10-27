@@ -36,12 +36,10 @@ class CyberbugsService extends BaseServices {
   };
 
   updateProject = (projectUpdate) => {
-    console.log(projectUpdate,'update')
     return this.put(
       `/api/Project/updateProject?projectId=${projectUpdate.id}`,
       projectUpdate
     );
-  
   };
 
   deleteProject = (projectId) => {

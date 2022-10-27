@@ -1,22 +1,25 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import ReactHtmlParser from 'react-html-parser'
-export default function ModalCyberBugs(props) {
-  const { taskDetailModal } = useSelector(state => state.TaskReducer);
-  const {projectDetail} = useSelector (state => state.ProjectReducer)
+import React from "react";
+import { useSelector } from "react-redux";
+import ReactHtmlParser from "react-html-parser";
 
-  const dispatch = useDispatch();
+export default function ModalCyberBugs() {
+  const { taskDetailModal } = useSelector((state) => state.TaskReducer);
+  const { projectDetail } = useSelector((state) => state.ProjectReducer);
 
-  useEffect(() => {
-    // console.log(arrStatus, 'status')
-  },[])
   const renderDescription = () => {
     const jsxDescriptioon = ReactHtmlParser(taskDetailModal.description);
     return jsxDescriptioon;
-  }
+  };
 
   return (
-    <div className="modal fade" id="infoModal" tabIndex={-1} role="dialog" aria-labelledby="infoModal" aria-hidden="true">
+    <div
+      className="modal fade"
+      id="infoModal"
+      tabIndex={-1}
+      role="dialog"
+      aria-labelledby="infoModal"
+      aria-hidden="true"
+    >
       <div className="modal-dialog modal-info">
         <div className="modal-content">
           <div className="modal-header">
@@ -24,7 +27,7 @@ export default function ModalCyberBugs(props) {
               <i className="fa fa-bookmark" />
               <span>{taskDetailModal.taskId}</span>
             </div>
-            <div style={{ display: 'flex' }} className="task-click">
+            <div style={{ display: "flex" }} className="task-click">
               <div>
                 <i className="fab fa-telegram-plane" />
                 <span style={{ paddingRight: 20 }}>Give feedback</span>
@@ -33,8 +36,13 @@ export default function ModalCyberBugs(props) {
                 <i className="fa fa-link" />
                 <span style={{ paddingRight: 20 }}>Copy link</span>
               </div>
-              <i className="fa fa-trash-alt" style={{ cursor: 'pointer' }} />
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+              <i className="fa fa-trash-alt" style={{ cursor: "pointer" }} />
+              <button
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
                 <span aria-hidden="true">×</span>
               </button>
             </div>
@@ -50,25 +58,46 @@ export default function ModalCyberBugs(props) {
                   </div>
                   <div className="comment">
                     <h6>Comment</h6>
-                    <div className="block-comment" style={{ display: 'flex' }}>
+                    <div className="block-comment" style={{ display: "flex" }}>
                       <div className="avatar">
-                        <img src={require("../../../assets/img/download (1).jfif")} alt="avatar" />
+                        <img
+                          src={require("../../../assets/img/download (1).jfif")}
+                          alt="avatar"
+                        />
                       </div>
                       <div className="input-comment">
                         <input type="text" placeholder="Add a comment ..." />
                         <p>
-                          <span style={{ fontWeight: 500, color: 'gray' }}>Protip:</span>
-                          <span>press
-                            <span style={{ fontWeight: 'bold', background: '#ecedf0', color: '#b4bac6' }}>M</span>
-                            to comment</span>
+                          <span style={{ fontWeight: 500, color: "gray" }}>
+                            Protip:
+                          </span>
+                          <span>
+                            press
+                            <span
+                              style={{
+                                fontWeight: "bold",
+                                background: "#ecedf0",
+                                color: "#b4bac6",
+                              }}
+                            >
+                              M
+                            </span>
+                            to comment
+                          </span>
                         </p>
                       </div>
                     </div>
                     <div className="lastest-comment">
                       <div className="comment-item">
-                        <div className="display-comment" style={{ display: 'flex' }}>
+                        <div
+                          className="display-comment"
+                          style={{ display: "flex" }}
+                        >
                           <div className="avatar">
-                            <img src={require("../../../assets/img/download (1).jfif")} alt="avatar" />
+                            <img
+                              src={require("../../../assets/img/download (1).jfif")}
+                              alt="avatar"
+                            />
                           </div>
                           <div>
                             <p style={{ marginBottom: 5 }}>
@@ -81,9 +110,8 @@ export default function ModalCyberBugs(props) {
                               accusamus molestiae?
                             </p>
                             <div>
-                              <span style={{ color: '#929398' }}>Edit</span>
-                              •
-                              <span style={{ color: '#929398' }}>Delete</span>
+                              <span style={{ color: "#929398" }}>Edit</span>•
+                              <span style={{ color: "#929398" }}>Delete</span>
                             </div>
                           </div>
                         </div>
@@ -96,32 +124,42 @@ export default function ModalCyberBugs(props) {
                     <h6>STATUS</h6>
                     <select className="custom-select">
                       {projectDetail.lstTask?.map((status, index) => {
-                        return <option key={index}>{status.statusName}</option>
+                        return <option key={index}>{status.statusName}</option>;
                       })}
                     </select>
                   </div>
                   <div className="assignees">
                     <h6>ASSIGNEES</h6>
-                    <div style={{ display: 'flex' }}>
-                      <div style={{ display: 'flex' }} className="item">
+                    <div style={{ display: "flex" }}>
+                      <div style={{ display: "flex" }} className="item">
                         <div className="avatar">
-                          <img src={require("../../../assets/img/download (1).jfif")} alt="avatar" />
+                          <img
+                            src={require("../../../assets/img/download (1).jfif")}
+                            alt="avatar"
+                          />
                         </div>
                         <p className="name">
                           Pickle Rick
-                          <i className="fa fa-times" style={{ marginLeft: 5 }} />
+                          <i
+                            className="fa fa-times"
+                            style={{ marginLeft: 5 }}
+                          />
                         </p>
                       </div>
-                      <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <i className="fa fa-plus" style={{ marginRight: 5 }} /><span>Add more</span>
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <i className="fa fa-plus" style={{ marginRight: 5 }} />
+                        <span>Add more</span>
                       </div>
                     </div>
                   </div>
                   <div className="reporter">
                     <h6>REPORTER</h6>
-                    <div style={{ display: 'flex' }} className="item">
+                    <div style={{ display: "flex" }} className="item">
                       <div className="avatar">
-                        <img src={require("../../../assets/img/download (1).jfif")} alt="reporter" />
+                        <img
+                          src={require("../../../assets/img/download (1).jfif")}
+                          alt="reporter"
+                        />
                       </div>
                       <p className="name">
                         Pickle Rick
@@ -144,21 +182,35 @@ export default function ModalCyberBugs(props) {
                   </div>
                   <div className="time-tracking">
                     <h6>TIME TRACKING</h6>
-                    <div style={{ display: 'flex' }}>
+                    <div style={{ display: "flex" }}>
                       <i className="fa fa-clock" />
-                      <div style={{ width: '100%' }}>
+                      <div style={{ width: "100%" }}>
                         <div className="progress">
-                          <div className="progress-bar" role="progressbar" style={{ width: '25%' }} aria-valuenow={25} aria-valuemin={0} aria-valuemax={100} />
+                          <div
+                            className="progress-bar"
+                            role="progressbar"
+                            style={{ width: "25%" }}
+                            aria-valuenow={25}
+                            aria-valuemin={0}
+                            aria-valuemax={100}
+                          />
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
                           <p className="logged">4h logged</p>
                           <p className="estimate-time">12h estimated</p>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div style={{ color: '#929398' }}>Create at a month ago</div>
-                  <div style={{ color: '#929398' }}>Update at a few seconds ago</div>
+                  <div style={{ color: "#929398" }}>Create at a month ago</div>
+                  <div style={{ color: "#929398" }}>
+                    Update at a few seconds ago
+                  </div>
                 </div>
               </div>
             </div>
@@ -166,6 +218,5 @@ export default function ModalCyberBugs(props) {
         </div>
       </div>
     </div>
-
-  )
+  );
 }

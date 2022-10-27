@@ -1,6 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { history } from "../../App";
 import { USER_LOGIN } from "../../redux/types/UserCyberBugsType";
+import { TOKEN } from "../../ulti/constants/settingSystem";
 
 export default function MenuCyberbugs() {
   let userLogin = {};
@@ -10,7 +12,10 @@ export default function MenuCyberbugs() {
   }
 
   return (
-    <div className="menu" style={{ position: 'fixed', marginLeft: '5%', zIndex: '1' }}>
+    <div
+      className="menu"
+      style={{ position: "fixed", marginLeft: "5%", zIndex: "1" }}
+    >
       <div className="account">
         <div className="avatar">
           <img src={userLogin.avatar} alt="avatar" />
@@ -18,17 +23,43 @@ export default function MenuCyberbugs() {
         <div className="account-info">
           <p>{userLogin.name}</p>
           <p>{userLogin.email}</p>
+          <button
+            onClick={() => {
+              localStorage.removeItem(USER_LOGIN);
+              localStorage.removeItem(TOKEN);
+              localStorage.removeItem("accessToken");
+              history.push("/");
+              window.location.reload();
+            }}
+            className="text-blue-800"
+          >
+            Sign out
+          </button>
         </div>
       </div>
       <div className="control p-0">
         <div>
           <i className="fa fa-cog mr-1" />
-          <NavLink className="text-dark" activeStyle={{ color: 'blue' }} to="/projectmanagement" activeClassName="active font-weight-bold text-primary">Project Management</NavLink>
+          <NavLink
+            className="text-dark"
+            activeStyle={{ color: "blue" }}
+            to="/projectmanagement"
+            activeClassName="active font-weight-bold text-primary"
+          >
+            Project Management
+          </NavLink>
         </div>
 
         <div>
           <i className="fa fa-cog mr-1" />
-          <NavLink className="text-dark" activeStyle={{ color: 'blue' }} to="/createproject" activeClassName="active font-weight-bold text-primary">Create Project</NavLink>
+          <NavLink
+            className="text-dark"
+            activeStyle={{ color: "blue" }}
+            to="/createproject"
+            activeClassName="active font-weight-bold text-primary"
+          >
+            Create Project
+          </NavLink>
         </div>
       </div>
 

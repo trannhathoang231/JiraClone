@@ -2,7 +2,7 @@ import React from "react";
 const initialState = {
   visible: false,
   ComponentContentDrawer: <p>default</p>,
-  callBackSubmit: (propsValue) => {
+  callBackSubmit: () => {
     alert("click demo!");
   },
 };

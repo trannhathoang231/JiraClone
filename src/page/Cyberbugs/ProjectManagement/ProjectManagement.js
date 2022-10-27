@@ -1,19 +1,33 @@
-import { Button, Space, Table, Tag,  Avatar, Popover, AutoComplete } from "antd";
+import {
+  Button,
+  Space,
+  Table,
+  Tag,
+  Avatar,
+  Popover,
+  AutoComplete,
+  Popconfirm,
+} from "antd";
 import React, { useState, useEffect, useRef } from "react";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import FormEditProject from "../../../component/Forms/FormEditProject/FormEditProject";
 import { getAllProjectAction } from "../../../redux/action/ProjectCyberBugsAction";
 import { DeleteProjectAction } from "../../../redux/action/DeleteProjectAction";
-import {  Popconfirm } from 'antd';
-import { addUserProjectAction, deleteUserFromProject, getAllUser } from "../../../redux/action/UserCyberBugsAction";
+import {
+  addUserProjectAction,
+  deleteUserFromProject,
+  getAllUser,
+} from "../../../redux/action/UserCyberBugsAction";
 import { NavLink, Redirect } from "react-router-dom";
 import { USER_LOGIN } from "../../../redux/types/UserCyberBugsType";
 
 export default function ProjectManagement(props) {
-  const { projectList } = useSelector(state => state.ProjectCyberBugsReducer);
-  const {userSearch} = useSelector(state => state.UserLoginCyberBugsReducer)
-  const [value,setValue] = useState('')
+  const { projectList } = useSelector((state) => state.ProjectCyberBugsReducer);
+  const { userSearch } = useSelector(
+    (state) => state.UserLoginCyberBugsReducer
+  );
+  const [value, setValue] = useState("");
   const searchRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -23,11 +37,10 @@ export default function ProjectManagement(props) {
   });
 
   useEffect(() => {
-    dispatch(getAllProjectAction())
-  }, [])
+    dispatch(getAllProjectAction());
+  }, []);
 
-
-  const handleChange = ( filters, sorter) => {
+  const handleChange = (filters, sorter) => {
     setState({
       filteredInfo: filters,
       sortedInfo: sorter,
@@ -54,159 +67,180 @@ export default function ProjectManagement(props) {
     });
   };
 
-  let { sortedInfo, filteredInfo } = state;
-  sortedInfo = sortedInfo || {};
-  filteredInfo = filteredInfo || {};
-
   const columns = [
     {
       title: "id",
       dataIndex: "id",
       key: "id",
-       sorter:(item1,item2) =>{
-        return Number(item2.id - item1.id)
+      sorter: (item1, item2) => {
+        return Number(item2.id - item1.id);
       },
- 
-
     },
     {
       title: "projectName",
       dataIndex: "projectName",
       key: "projectName",
-      render: (text,record,index)=> {
-        return <NavLink to={`/projectdetail/${record.id}`}> {text}</NavLink>
+      render: (text, record, index) => {
+        return <NavLink to={`/projectdetail/${record.id}`}> {text}</NavLink>;
       },
-      sorter: (item2,item1) =>{
+      sorter: (item2, item1) => {
         let projectName1 = item1.projectName?.trim().toLowerCase();
         let projectName2 = item2.projectName?.trim().toLowerCase();
-        if(projectName2 < projectName1) {
-            return -1;
+        if (projectName2 < projectName1) {
+          return -1;
         }
         return 1;
       },
     },
     {
-      title: 'category',
-      dataIndex: 'categoryName',
-      key: 'categoryId',
-            sorter: (item2,item1) =>{
+      title: "category",
+      dataIndex: "categoryName",
+      key: "categoryId",
+      sorter: (item2, item1) => {
         let categoryName1 = item1.categoryName?.trim().toLowerCase();
         let categoryName2 = item2.categoryName?.trim().toLowerCase();
-        if(categoryName2 < categoryName1) {
-            return -1;
+        if (categoryName2 < categoryName1) {
+          return -1;
         }
         return 1;
       },
     },
     {
-        title: 'creator',
-        key:'creator',
-        render:(text,record,index) => {
-            return <Tag color="green">{record.creator?.name}</Tag>
-        },
-        sorter: (item2,item1) =>{
-            let creator1 = item1.creator?.name.trim().toLowerCase();
-            let creator2 = item2.creator?.name.trim().toLowerCase();
-            if (creator2 < creator1) {
-                return -1
-            }
-            return 1
-        }
-    },
-    {    
-      title: 'members',
-      key: 'members',
-      render(text, record, index) {
-        return <div>
-            {record.members?.slice(0,3).map((member,index) =>{
-                return (
-                <Popover key={index} placement="top" title="members" content ={()=>{
-                    return <table className="table">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>avatar</th>
-                                <th>name</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {record.members?.map((item,index)=>{
-                               return <tr key={index}>
-                                    <td>{item.userId}</td>
-                                    <td><img src={item.avatar} width="30" height="30" style={{borderRadius:'15px'}} alt="member"/></td>
-                                    <td>{item.name}</td>
-                                    <td>
-                                        <button onClick={()=>{
-                                            dispatch(deleteUserFromProject({projectId:record.id,userId:item.userId}))
-                                        }} className="btn btn-danger" style={{borderRadius:'50%'}}>X</button>
-                                    </td>
-                                </tr>
-                            })}
-                        </tbody>
-                    </table>
-                }}>
-                    <Avatar key={index} src={member.avatar}/>
-                </Popover>
-                )
-            })}
-
-            {record.members?.length > 3 ? <Avatar>...</Avatar> : ''}
-
-            <Popover placement="rightTop" title={"Add user"} content={()=>{
-                return <AutoComplete 
-                options={userSearch?.map((user,index)=>{
-                    return {label:user.name,value:user.userId.toString()}
-                })}
-
-                value={value}
-
-                onChange={(text)=>{
-                    setValue(text)
-                }}
-
-                onSelect={(valueSelect,option)=>{
-                    console.log('valueSelect',valueSelect)
-                    console.log(' record.id',record.id)
-                    //set gia tri cua hop thoai = option.label
-                    setValue(option.label)  
-                    //*goi api gui ve be
-                    // dispatch({
-                    //     type:'ADD_USER_PROJECT_API',
-                    //    userProject:{
-                    //     "projectId":record.id,
-                    //     "userId":addUserProjectAction(valueSelect)
-                    //    }
-                    // })
-                    dispatch(addUserProjectAction({projectId : record.id, userId : valueSelect}))
-                }}
-
-                style={{width:'100%'}} onSearch={(value)=>{
-
-                    if(searchRef.current){
-                        clearTimeout(searchRef.current)
-                    }
-                    searchRef.current = setTimeout(()=>{
-                        dispatch(getAllUser(value))
-                    },300)
-
-                   
-
-                }}/>
-            }} trigger="click">
-                <Button style={{borderRadius:'50%'}}>+</Button>
-            </Popover>
-        </div>
+      title: "creator",
+      key: "creator",
+      render: (text, record, index) => {
+        return <Tag color="green">{record.creator?.name}</Tag>;
       },
-      sorter: (item2,item1) =>{
-        let creator1 = item1.creator.name?.trim().toLowerCase();
-        let creator2 = item2.creator.name?.trim().toLowerCase();
-        if(creator2 < creator1) {
-            return -1;
+      sorter: (item2, item1) => {
+        let creator1 = item1.creator?.name.trim().toLowerCase();
+        let creator2 = item2.creator?.name.trim().toLowerCase();
+        if (creator2 < creator1) {
+          return -1;
         }
         return 1;
       },
-     
+    },
+    {
+      title: "members",
+      key: "members",
+      render(record) {
+        return (
+          <div>
+            {record.members?.slice(0, 3).map((member, index) => {
+              return (
+                <Popover
+                  key={index}
+                  placement="top"
+                  title="members"
+                  content={() => {
+                    return (
+                      <table className="table">
+                        <thead>
+                          <tr>
+                            <th>Id</th>
+                            <th>avatar</th>
+                            <th>name</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {record.members?.map((item, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{item.userId}</td>
+                                <td>
+                                  <img
+                                    src={item.avatar}
+                                    width="30"
+                                    height="30"
+                                    style={{ borderRadius: "15px" }}
+                                    alt="member"
+                                  />
+                                </td>
+                                <td>{item.name}</td>
+                                <td>
+                                  <button
+                                    onClick={() => {
+                                      dispatch(
+                                        deleteUserFromProject({
+                                          projectId: record.id,
+                                          userId: item.userId,
+                                        })
+                                      );
+                                    }}
+                                    className="btn btn-danger"
+                                    style={{ borderRadius: "50%" }}
+                                  >
+                                    X
+                                  </button>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    );
+                  }}
+                >
+                  <Avatar key={index} src={member.avatar} />
+                </Popover>
+              );
+            })}
+
+            {record.members?.length > 3 ? <Avatar>...</Avatar> : ""}
+
+            <Popover
+              placement="rightTop"
+              title={"Add user"}
+              content={() => {
+                return (
+                  <AutoComplete
+                    options={userSearch?.map((user, index) => {
+                      return {
+                        label: user.name,
+                        value: user.userId.toString(),
+                      };
+                    })}
+                    value={value}
+                    onChange={(text) => {
+                      setValue(text);
+                    }}
+                    onSelect={(valueSelect, option) => {
+                      setValue(option.label);
+                      dispatch(
+                        addUserProjectAction({
+                          projectId: record.id,
+                          userId: valueSelect,
+                        })
+                      );
+                    }}
+                    style={{ width: "100%" }}
+                    onSearch={(value) => {
+                      if (searchRef.current) {
+                        clearTimeout(searchRef.current);
+                      }
+                      searchRef.current = setTimeout(() => {
+                        dispatch(getAllUser(value));
+                      }, 300);
+                    }}
+                  />
+                );
+              }}
+              trigger="click"
+            >
+              <Button style={{ borderRadius: "50%" }}>+</Button>
+            </Popover>
+          </div>
+        );
+      },
+      sorter: (item2, item1) => {
+        let creator1 = item1.creator.name?.trim().toLowerCase();
+        let creator2 = item2.creator.name?.trim().toLowerCase();
+        if (creator2 < creator1) {
+          return -1;
+        }
+        return 1;
+      },
     },
     {
       title: "Action",
@@ -214,35 +248,36 @@ export default function ProjectManagement(props) {
       render: (record) => {
         return (
           <div>
-            <button className="btn mr-2 btn-primary" onClick={() => {
-              const action = {
-                type: 'OPEN_FORM_EDIT_PROJECT',
-                Component: <FormEditProject />
-              }
+            <button
+              className="btn mr-2 btn-primary"
+              onClick={() => {
+                const action = {
+                  type: "OPEN_FORM_EDIT_PROJECT",
+                  Component: <FormEditProject />,
+                };
+                //dispatch lên reducer nội dung drawer
+                dispatch(action);
 
-              //dispatch lên reducer nội dung drawer
-              dispatch(action)
-
-              //dispatch dữ liệu dòng hiện tại lên reducer
-              const actionEditProject = {
-                type:'EDIT_PROJECT',
-                projectEditModel:record
-              }
-
-              dispatch(actionEditProject)
-            }}>
+                //dispatch dữ liệu dòng hiện tại lên reducer
+                const actionEditProject = {
+                  type: "EDIT_PROJECT",
+                  projectEditModel: record,
+                };
+                dispatch(actionEditProject);
+              }}
+            >
               <EditOutlined style={{ fontSize: 17 }} />
             </button>
             <Popconfirm
               title="Are you sure to delete this project?"
-              onConfirm={() => { 
+              onConfirm={() => {
                 const action = {
-                  type: 'DELETE_PROJECT',
-                  projectId: record.id
-                }
-                dispatch(DeleteProjectAction(action))
-               }}
-              onCancel={() => {  }}
+                  type: "DELETE_PROJECT",
+                  projectId: record.id,
+                };
+                dispatch(DeleteProjectAction(action));
+              }}
+              onCancel={() => {}}
               okText="Yes"
               cancelText="No"
             >
@@ -250,7 +285,6 @@ export default function ProjectManagement(props) {
                 <DeleteOutlined style={{ fontSize: 17 }} />
               </button>
             </Popconfirm>
-
           </div>
         );
       },
@@ -282,4 +316,3 @@ export default function ProjectManagement(props) {
     </div>
   );
 }
-
